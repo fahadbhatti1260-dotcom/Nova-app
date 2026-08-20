@@ -252,13 +252,13 @@ function matchLocalIntent(msg: string): { reply: string; action: any } | null {
   // Flashlight / Torch
   if (m.includes("torch on") || m.includes("flashlight on") || m.includes("torch chala") || m.includes("light on") || m.includes("ٹارچ آن")) {
     return {
-      reply: "ٹارچ آن کر دی گئی ہے۔ (Torch turned ON)",
+      reply: "ٹارچ آن کر دی گئی ہے۔",
       action: { type: "phone_setting_toggle", title: "Flashlight ON", data: { setting: "flashlight", state: true }, status: "executed" },
     };
   }
   if (m.includes("torch off") || m.includes("flashlight off") || m.includes("torch band") || m.includes("light off") || m.includes("ٹارچ بند")) {
     return {
-      reply: "ٹارچ بند کر دی گئی ہے۔ (Torch turned OFF)",
+      reply: "ٹارچ بند کر دی گئی ہے۔",
       action: { type: "phone_setting_toggle", title: "Flashlight OFF", data: { setting: "flashlight", state: false }, status: "executed" },
     };
   }
@@ -319,7 +319,7 @@ app.post("/api/assistant/chat", async (req, res) => {
       if (local) return res.json(local);
 
       return res.json({
-        reply: "سلام! میں نووا ہوں، آپ کا ذاتی اینڈرائیڈ اسسٹنٹ۔ میں اردو اور انگلش دونوں میں آپ کے احکامات سمجھتی ہوں اور فوراً جواب دیتی ہوں۔",
+        reply: "سلام! میں نووا ہوں، آپ کی مدد کے لیے تیار ہوں۔ آپ کا کیا حکم ہے؟",
         action: null,
       });
     }
@@ -335,7 +335,7 @@ You live on the user's Android phone as their primary personal assistant.
 LANGUAGE & VOICE CAPABILITIES:
 - Full Urdu & English Fluency: You fully understand Urdu in Urdu Script (اردو), Roman Urdu (e.g. 'Aap kaise hain?', 'Mera alarm lagao', 'Torch on karo', 'Fahad ko call karo'), and English.
 - Language Matching: Always reply in the same language and script that the user spoke or typed in! If the user asks in Urdu script, answer warmly in Urdu script. If in Roman Urdu, reply in Roman Urdu or Urdu script. If in English, reply in English.
-- Fast, Punchy, Voice-First Delivery: Your responses will be read aloud immediately using the browser Web Speech API. Keep responses direct, crisp, natural, warm, and free of unnecessary lengthy markdown or large text walls.
+- Fast, Punchy, Voice-First Delivery: Keep responses direct, crisp, natural, warm, and conversational.
 
 KEY BEHAVIORS:
 1. Immediate Action Execution: When the user asks for a phone action (alarms, timers, calls, text messages, torch/flashlight, Wi-Fi, Bluetooth, calendar, camera, video creation, or YouTube), ALWAYS call the corresponding function call immediately!
@@ -545,25 +545,24 @@ CURRENT DEVICE STATUS:
     }
 
     res.json({
-      reply: textResponse || "جی، میں حاضر ہوں۔",
+      reply: textResponse || "جی میں آپ کی بات سمجھ رہی ہوں۔ مزید کیا بتانا چاہتے ہیں؟",
       action: detectedAction,
     });
   } catch (error: any) {
     console.error("Chat API error:", error?.message || error);
-    // Graceful fallback to avoid 500 error & connection dropouts
     const local = matchLocalIntent(req.body?.message || "");
     if (local) {
       return res.json(local);
     }
 
     res.json({
-      reply: "جی، میں سن رہی ہوں۔ آپ کا حکم مل گیا ہے۔",
+      reply: `میں سمجھ گئی، آپ کا پیغام تھا: "${req.body?.message || ""}"۔ میں اس پر مزید کیا کر سکتی ہوں؟`,
       action: null,
     });
   }
 });
 
-// Text to Speech Endpoint (Optional Gemini Neural TTS)
+// Text to Speech Endpoint
 app.post("/api/assistant/tts", async (req, res) => {
   try {
     const { text, voiceName = "Zephyr" } = req.body;
