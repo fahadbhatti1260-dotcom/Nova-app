@@ -375,7 +375,7 @@ CURRENT DEVICE STATUS:
     });
 
     const response = await ai.models.generateContent({
-      model: "gemini-3.7-flash",
+      model: "gemini-1.5-flash",
       contents,
       config: {
         systemInstruction,
@@ -582,7 +582,7 @@ app.post("/api/assistant/tts", async (req, res) => {
       .slice(0, 500);
 
     const response = await ai.models.generateContent({
-      model: "gemini-3.1-flash-tts-preview",
+      model: "gemini-1.5-flash",
       contents: [{ parts: [{ text: `Say naturally: ${cleanText}` }] }],
       config: {
         responseModalities: [Modality.AUDIO],
@@ -647,7 +647,7 @@ app.post("/api/assistant/vision", async (req, res) => {
     };
 
     const response = await ai.models.generateContent({
-      model: "gemini-3.7-flash",
+      model: "gemini-1.5-flash",
       contents: { parts: [imagePart, textPart] },
       config: {
         responseMimeType: "application/json",
@@ -735,7 +735,7 @@ Generate JSON matching this exact structure:
 }`;
 
     const response = await ai.models.generateContent({
-      model: "gemini-3.7-flash",
+      model: "gemini-1.5-flash",
       contents: prompt,
       config: {
         responseMimeType: "application/json",
@@ -825,7 +825,7 @@ Generate JSON:
 }`;
 
     const response = await ai.models.generateContent({
-      model: "gemini-3.7-flash",
+      model: "gemini-1.5-flash",
       contents: prompt,
       config: {
         responseMimeType: "application/json",
