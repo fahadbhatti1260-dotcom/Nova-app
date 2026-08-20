@@ -1,0 +1,6 @@
+{
+  "name": "Nova - Android AI Assistant",
+  "description": "Voice-first Android AI personal assistant with long-term user memory, natural conversational speech, phone actions, camera vision understanding, video creation studio, and YouTube integration.",
+  "requestFramePermissions": ["camera", "microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
