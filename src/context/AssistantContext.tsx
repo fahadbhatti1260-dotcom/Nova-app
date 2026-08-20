@@ -459,7 +459,7 @@ export const AssistantProvider: React.FC<{ children: React.ReactNode }> = ({ chi
       } catch (err: any) {
         console.error('Send message error:', err);
         setVoiceState('idle');
-        const fallbackText = "میں نے آپ کی بات سمجھ لی ہے۔ کیا آپ دوبارہ فرما سکتے ہیں؟";
+        const fallbackText = "سرور سے رابطہ نہیں ہو پا رہا۔ برائے کرم Vercel یا اینوائرنمنٹ میں API Key اور انٹرنیٹ کنیکشن چیک کریں۔";
         setMessages((prev) => [
           ...prev,
           {
